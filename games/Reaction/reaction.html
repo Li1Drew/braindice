@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reaction — BrainDice</title>
+  <link rel="stylesheet" href="reaction.css" />
+</head>
+<body class="theme-reaction">
+
+  <main class="page">
+    <header class="topbar">
+      <a class="back" href="/index.html">← Головна</a>
+    </header>
+
+    <section class="hud">
+      <div class="hudTitle">
+        <h1>Reaction</h1>
+        <p>Швидкість та точність — запорука високого результату!</p>
+      </div>
+
+      <div class="hudStats">
+        <div class="stat">
+          <span class="label">Життя</span>
+          <span class="value" id="lives">❤️❤️❤️</span>
+        </div>
+        <div class="stat">
+          <span class="label">Рахунок</span>
+          <span class="value" id="score">0</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="gameCard">
+      <div class="controls-row">
+        <div class="panel target-panel">
+          <div class="panelTitle">Твоя ціль</div>
+          <div id="targetBox" class="targetBox">?</div>
+        </div>
+
+        <div class="panel settings-panel">
+          <div class="panelTitle">Конфігурація</div>
+          <div class="toggle-group">
+            <button class="modeBtn active" data-mode="color">Кольори</button>
+            <button class="modeBtn" data-mode="symbol">Символи</button>
+          </div>
+          <div class="diff-group">
+            <button class="diffBtn active" data-diff="easy">Легко</button>
+            <button class="diffBtn" data-diff="medium">Середньо</button>
+            <button class="diffBtn" data-diff="hard">Важко</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="arena" class="arena">
+        <div id="startBtn" class="bigBtn">Почати тест</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="reaction.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extreme Odd — BrainDice</title>
+  <link rel="stylesheet" href="odd.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="nav-btn-back" href="/index.html">
+        <span class="icon">🏠</span> 
+        <span class="text">← Головна</span>
+      </a>
+      <div id="gameStats" class="stats-pills hidden">
+        <div class="pill">❤️ <span id="livesDisplay">3</span></div>
+        <div class="pill">⭐ <span id="scoreDisplay">0</span></div>
+      </div>
+    </header>
+
+    <section class="gameCard" id="mainCard">
+      <div id="startScreen" class="start-view">
+        <div class="hero-icon">👁️‍🗨️</div>
+        <h1>Extreme Odd</h1>
+        <p class="subtitle">Знайдіть символ, що відрізняється. <br><b>Увага:</b> деякі символи ідентичні на вигляд!</p>
+        <button class="main-btn" onclick="startGame()">Почати</button>
+      </div>
+
+      <div id="gameArea" class="hidden">
+        <div class="game-header">
+          <div class="timer-line"><div id="timerBar"></div></div>
+        </div>
+        <div id="gridContainer" class="grid-container"></div>
+      </div>
+
+      <div id="resultScreen" class="result-view hidden">
+        <div class="circle-score"><span id="finalScore">0</span></div>
+        <h3>Гру завершено</h3>
+        <button class="retry-btn" onclick="location.reload()">Спробувати знову</button>
+      </div>
+    </section>
+  </main>
+  <script src="odd.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pattern Decoder — BrainDice</title>
+  <link rel="stylesheet" href="pattern.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="back" href="/index.html">← Головна</a>
+    </header>
+
+    <section class="hud">
+      <div class="hudTitle">
+        <h1>Pattern Decoder</h1>
+        <p id="instruction">Аналізуйте закономірності</p>
+      </div>
+      <div class="hudStats">
+        <div class="stat"><span class="label">Рівень</span><span class="value" id="level">1</span></div>
+        <div class="stat"><span class="label">Очки</span><span class="value" id="score">0</span></div>
+      </div>
+    </section>
+
+    <section class="gameCard">
+      <div id="gameContent" class="hidden">
+        <div id="gameZone" class="game-zone"></div>
+        
+        <div id="answerSection" class="answer-section hidden">
+          <div class="answer-label">Оберіть варіант:</div>
+          <div class="options-grid" id="optionsGrid"></div>
+        </div>
+      </div>
+
+      <div id="startTrigger" class="start-trigger">
+        <span>Натисніть, щоб почати тест</span>
+      </div>
+    </section>
+  </main>
+  <script src="pattern.js"></script>
+</body>
+</html>

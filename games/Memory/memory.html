@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memory — BrainDice</title>
+  <link rel="stylesheet" href="memory.css" />
+</head>
+<body class="theme-memory">
+
+  <main class="page">
+    <header class="topbar">
+      <a class="back" href="/index.html">← Головна</a>
+    </header>
+
+    <section class="hud">
+      <div class="hudTitle">
+        <h1>Memory Access</h1>
+        <p id="instruction">Оберіть режим та почніть тренування</p>
+      </div>
+
+      <div class="hudStats">
+        <div class="stat">
+          <span class="label">Життя</span>
+          <span class="value" id="lives">❤️❤️❤️</span>
+        </div>
+        <div class="stat">
+          <span class="label">Рівень</span>
+          <span class="value" id="level">1</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="gameCard">
+      <div class="settings-row">
+        <div class="mode-toggle">
+          <button class="modeBtn active" data-mode="dual">Паралельний</button>
+          <button class="modeBtn" data-mode="seq">Послідовний</button>
+        </div>
+      </div>
+
+      <div class="memory-layout">
+        <div class="panel code-panel">
+          <div class="panelTitle">Код доступу</div>
+          <div id="digitBox" class="digitBox">----</div>
+          <div id="numpad" class="numpad hidden"></div>
+        </div>
+
+        <div class="panel grid-panel">
+          <div id="grid" class="grid">
+            <button id="startBtn" class="bigBtn">Почати сесію</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="memory.js"></script>
+</body>
+</html>

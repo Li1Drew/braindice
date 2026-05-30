@@ -1,0 +1,101 @@
+:root {
+  --bg-gradient: linear-gradient(135deg, #cfe9ff 0%, #f6f8fb 100%);
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --accent: #6fbf73;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: 'Inter', sans-serif;
+  background: var(--bg-gradient); min-height: 100vh;
+  display: flex; justify-content: center; align-items: flex-start; padding: 20px;
+  color: var(--text-main);
+}
+
+.page { width: 100%; max-width: 800px; }
+
+.topbar { margin-bottom: 20px; }
+.back {
+  text-decoration: none; color: var(--text-main); font-weight: bold;
+  padding: 8px 16px; background: white; border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.2s;
+}
+
+.hud, .gameCard {
+  background: var(--card-bg); backdrop-filter: blur(12px);
+  border-radius: 24px; padding: 24px; margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.4); box-shadow: var(--shadow);
+}
+
+.hud { display: flex; justify-content: space-between; align-items: center; }
+.hudTitle h1 { margin: 0; font-size: 28px; }
+.hudTitle p { margin: 5px 0 0; color: var(--text-muted); font-size: 14px; }
+
+.hudStats { display: flex; gap: 15px; }
+.stat {
+  background: white; padding: 12px 20px; border-radius: 16px;
+  text-align: center; min-width: 110px; border: 1px solid rgba(0,0,0,0.03);
+}
+.stat .label { display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+.stat .value { font-size: 20px; font-weight: 800; }
+
+.controls-row { display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-bottom: 20px; }
+.panel { background: rgba(255,255,255,0.5); padding: 15px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); }
+.panelTitle { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; }
+
+.targetBox {
+  height: 80px; background: white; border-radius: 15px;
+  display: grid; place-items: center; font-size: 32px; font-weight: 900;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); transition: 0.3s;
+}
+
+.toggle-group, .diff-group { display: flex; gap: 5px; margin-bottom: 10px; }
+.modeBtn, .diffBtn {
+  flex: 1; padding: 8px; border: 1px solid rgba(0,0,0,0.05); border-radius: 10px;
+  background: white; cursor: pointer; font-size: 12px; font-weight: 700; transition: 0.2s;
+}
+.modeBtn.active, .diffBtn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+.arena {
+  height: 400px; background: rgba(255,255,255,0.4); border-radius: 20px;
+  position: relative; border: 2px dashed rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+
+.bigBtn {
+  padding: 18px 36px; background: var(--accent); color: white;
+  border-radius: 15px; font-size: 18px; font-weight: 800; border: none;
+  cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(111, 191, 115, 0.3);
+}
+
+.object {
+  position: absolute; width: 52px; height: 52px; border-radius: 12px;
+  display: grid; place-items: center; font-size: 22px; font-weight: 900;
+  color: white; cursor: pointer; box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+.error-flash { animation: shake 0.2s ease-in-out; background: rgba(239, 68, 68, 0.15) !important; }
+
+/* Анімація для очок під час кліку */
+.score-popup {
+  position: absolute; color: var(--accent); font-weight: 800;
+  animation: fadeUp 0.8s ease-out forwards; pointer-events: none;
+}
+@keyframes fadeUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-40px); opacity: 0; }
+}

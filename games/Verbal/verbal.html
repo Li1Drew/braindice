@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verbal Mastery — BrainDice</title>
+  <link rel="stylesheet" href="verbal.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="nav-btn" href="/index.html">← Головна</a>
+      
+      <div id="gameStats" class="stats-pills hidden">
+        <div class="pill">❤️ <span id="livesDisplay">3</span></div>
+        <div class="pill">⭐ <span id="scoreDisplay">0</span></div>
+      </div>
+
+      <button id="toModes" class="nav-btn hidden" onclick="location.reload()">До режимів →</button>
+    </header>
+
+    <section class="gameCard" id="mainCard">
+      <div id="modeSelection" class="mode-menu">
+        <h1>Verbal Mastery</h1>
+        <p class="subtitle">Оберіть тип когнітивного навантаження</p>
+        
+        <div class="menu-grid">
+          <div onclick="startGame('builder')" class="menu-card card-orange">
+            <div class="card-icon">🧩</div>
+            <div class="card-info">
+              <h3>Builder</h3>
+              <p>Зберіть слово з літер</p>
+            </div>
+          </div>
+
+          <div onclick="startGame('missing')" class="menu-card card-yellow">
+            <div class="card-icon">🔍</div>
+            <div class="card-info">
+              <h3>Missing</h3>
+              <p>Вставте літеру, якої бракує</p>
+            </div>
+          </div>
+
+          <div onclick="startGame('synonym')" class="menu-card card-red">
+            <div class="card-icon">🔄</div>
+            <div class="card-info">
+              <h3>Synonyms</h3>
+              <p>Знайдіть близьке за значенням</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="gameArea" class="hidden">
+        <div class="game-header">
+          <span id="taskInstruction">Завдання</span>
+          <div class="timer-line"><div id="timerBar"></div></div>
+        </div>
+
+        <div id="contentDisplay" class="word-main"></div>
+
+        <div id="interactionArea" class="action-zone"></div>
+      </div>
+
+      <div id="resultScreen" class="result-view hidden">
+        <div class="circle-score">
+          <span id="finalScore">0</span>
+        </div>
+        <h3>Тренування завершено!</h3>
+        <button class="retry-btn" onclick="location.reload()">Спробувати ще раз</button>
+      </div>
+    </section>
+  </main>
+  <script src="verbal.js"></script>
+</body>
+</html>

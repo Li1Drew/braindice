@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estimation — BrainDice</title>
+    <link rel="stylesheet" href="estimation.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <header class="status-bar">
+            <a class="back" href="/index.html">← Головна</a>
+            <div class="level-badge" id="lvlTag">Рівень 1</div>
+            <div class="score-display">⭐ <span id="score">0</span></div>
+            <div class="hearts" id="hearts">🧡🧡🧡</div>
+        </header>
+
+        <!-- Стартовий екран -->
+        <div id="startScreen" class="overlay">
+            <div class="icon-pulse">✨</div>
+            <h1>Окомір</h1>
+            <p>Визнач, де фігур більше за частку секунди</p>
+            <button class="cta-button" onclick="startGame()">Почати</button>
+        </div>
+
+        <!-- Ігрова зона -->
+        <main id="gameArea" class="hidden">
+            <div class="progress-track"><div id="timeFill"></div></div>
+            <div id="modeHint" class="mode-hint">Завантаження...</div>
+            
+            <div class="decks-container">
+                <div id="deckL" class="deck" onclick="choose('left')"></div>
+                <div id="deckR" class="deck" onclick="choose('right')"></div>
+            </div>
+        </main>
+
+        <!-- Фінальний екран -->
+        <div id="resultScreen" class="overlay hidden">
+            <h2>Результат</h2>
+            <div class="final-score" id="finalScore">0</div>
+            <button class="cta-button" onclick="location.reload()">Ще раз</button>
+        </div>
+    </div>
+    <script src="estimation.js"></script>
+</body>
+</html>

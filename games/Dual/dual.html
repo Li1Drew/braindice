@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dual Task — BrainDice</title>
+  <link rel="stylesheet" href="dual.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="back" href="/index.html">← Головна</a>
+    </header>
+
+    <section class="hud">
+      <div class="hudTitle">
+        <h1>Dual Task</h1>
+        <p id="instruction">Тримай баланс у зеленій зоні та вирішуй завдання!</p>
+      </div>
+      <div class="hudStats">
+        <div class="stat">
+          <span class="label">Рівень</span>
+          <span class="value" id="level">1</span>
+        </div>
+        <div class="stat">
+          <span class="label">Життя</span>
+          <span class="value" id="lives">❤️❤️❤️</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="gameCard main-container">
+      <div id="gameContent" class="hidden">
+        <div class="dual-layout">
+          <div class="panel-a">
+            <div class="panelTitle">Баланс системи</div>
+            <div class="energy-container">
+              <div class="safety-zone"></div>
+              <div id="stabilityBar" class="progress-bar"></div>
+            </div>
+            <button id="stabilizeBtn" class="actionBtn main-btn">ПІДТРИМКА</button>
+          </div>
+          <div class="panel-b">
+            <div class="panelTitle">Обчислення</div>
+            <div id="equation" class="equation">----</div>
+            <div class="logic-controls">
+              <button class="actionBtn btn-false" data-val="false">НІ</button>
+              <button class="actionBtn btn-true" data-val="true">ТАК</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="startTrigger" class="start-trigger">Натисніть, щоб почати</div>
+    </section>
+  </main>
+  <script src="dual.js"></script>
+</body>
+</html>

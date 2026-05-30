@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stroop Extreme — BrainDice</title>
+  <link rel="stylesheet" href="stroop.css">
+</head>
+<body class="theme-stroop">
+  <main class="page">
+    <header class="topbar">
+      <a class="back" href="/index.html">← Головна</a>
+    </header>
+
+    <section class="hud">
+      <div class="hudTitle">
+        <h1>Stroop Challenge</h1>
+        <p id="instruction">Натисніть на КОЛІР</p>
+      </div>
+      <div class="hudStats">
+        <div class="stat">
+          <span class="label">Очки</span>
+          <span class="value" id="score">0</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="gameCard" id="gameCard">
+      <div id="startTrigger" class="start-trigger">
+        <span>Натисніть, щоб почати</span>
+      </div>
+
+      <div id="gameContent" class="hidden">
+        <div class="lives-bar" id="lives">❤️❤️❤️</div>
+        <div class="timer-container">
+          <div id="timerBar" class="timer-bar"></div>
+        </div>
+        <div id="wordDisplay" class="word-display">ЧЕРВОНИЙ</div>
+        <div class="options-grid" id="optionsGrid"></div>
+      </div>
+
+      <div id="resultScreen" class="result-screen hidden">
+        <h2>Гру завершено!</h2>
+        <div class="final-score" id="finalScore">0</div>
+        <p>Ваш результат</p>
+        <button class="retry-btn" onclick="location.reload()">Спробувати ще раз</button>
+      </div>
+    </section>
+  </main>
+  <script src="stroop.js"></script>
+</body>
+</html>
