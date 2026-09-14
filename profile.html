@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Профіль — BrainDice</title>
+
+  <link rel="stylesheet" href="profile.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="brand">
+      <a href="/index.html" class="brand-link">
+        <svg width="40" height="40" viewBox="0 0 64 64" fill="none">
+          <polygon points="32,4 16,16 32,32 48,16" fill="#ffd966"/>
+          <polygon points="16,16 16,32 32,32 32,16" fill="#f4c542"/>
+          <polygon points="32,16 32,32 48,32 48,16" fill="#ffe08a"/>
+          <polygon points="32,4 32,16 48,16 32,4" fill="#fff2a8"/>
+          <polygon points="16,32 32,32 48,32 32,44" fill="#f7d36c"/>
+          <polygon points="16,16 16,32 32,44 32,32" fill="#e6b843"/>
+        </svg>
+
+        <div class="brand-text">
+          <h1>BrainDice</h1>
+          <p>Твій когнітивний тренажер</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="header-actions">
+      <a href="/index.html" class="back-btn">
+        ← Головна
+      </a>
+
+      <button id="logoutBtn" class="logout-btn">
+        Вийти
+      </button>
+    </div>
+
+  </header>
+
+
+  <main class="profile-container">
+
+    <!-- Завантаження -->
+    <div id="loadingState" class="state-card">
+      <div class="loader"></div>
+      <p>Завантаження профілю...</p>
+    </div>
+
+
+    <!-- Неавторизований -->
+    <div id="loginState" class="state-card hidden">
+      <div class="state-icon">🔐</div>
+
+      <h2>Потрібна авторизація</h2>
+
+      <p>
+        Увійди в акаунт, щоб переглядати
+        свою статистику та результати.
+      </p>
+
+      <a href="/index.html" class="primary-btn">
+        Повернутися на головну
+      </a>
+    </div>
+
+
+    <!-- Основний профіль -->
+    <section id="profileContent" class="hidden">
+
+      <div class="profile-header-card">
+
+        <div class="avatar" id="avatar">
+          ?
+        </div>
+
+        <div class="profile-main-info">
+
+          <span class="profile-label">
+            ПРОФІЛЬ ГРАВЦЯ
+          </span>
+
+          <h2 id="profileDisplayName">
+            Користувач
+          </h2>
+
+          <p id="profileEmail">
+            —
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Редагування імені -->
+      <section class="profile-card">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-label">
+              НАЛАШТУВАННЯ
+            </span>
+
+            <h3>Ім'я гравця</h3>
+          </div>
+        </div>
+
+        <div class="name-form">
+
+          <input
+            type="text"
+            id="displayNameInput"
+            maxlength="30"
+            placeholder="Введи ім'я"
+          />
+
+          <button
+            id="saveNameBtn"
+            class="primary-btn"
+          >
+            Зберегти
+          </button>
+
+        </div>
+
+        <p
+          id="profileMessage"
+          class="profile-message"
+        ></p>
+
+      </section>
+
+
+      <!-- Загальна статистика -->
+      <section class="profile-card">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-label">
+              СТАТИСТИКА
+            </span>
+
+            <h3>Твої результати</h3>
+          </div>
+        </div>
+
+
+        <div class="stats-grid">
+
+          <div class="stat-box">
+            <span class="stat-icon">🎮</span>
+            <span class="stat-label">
+              Ігор зіграно
+            </span>
+            <strong id="totalGames">
+              0
+            </strong>
+          </div>
+
+
+          <div class="stat-box">
+            <span class="stat-icon">🏆</span>
+            <span class="stat-label">
+              Найкращий результат
+            </span>
+            <strong id="bestScore">
+              0
+            </strong>
+          </div>
+
+
+          <div class="stat-box">
+            <span class="stat-icon">📊</span>
+            <span class="stat-label">
+              Середній результат
+            </span>
+            <strong id="averageScore">
+              0
+            </strong>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- Статистика тренажерів -->
+      <section class="profile-card">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-label">
+              ТРЕНАЖЕРИ
+            </span>
+
+            <h3>Результати за іграми</h3>
+          </div>
+        </div>
+
+
+        <div
+          id="trainerStats"
+          class="trainer-stats"
+        >
+          <!-- Заповнюється через JS -->
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+
+  <script type="module" src="auth.js"></script>
+  <script src="profile.js"></script>
+
+</body>
+</html>

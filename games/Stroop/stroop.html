@@ -8,45 +8,62 @@
 </head>
 <body class="theme-stroop">
   <main class="page">
-    <header class="topbar">
-      <a class="back" href="/index.html">← Головна</a>
-    </header>
+    
+    <!-- Відцентрований контейнер для гри -->
+    <div class="game-container">
+      
+      <header class="topbar">
+        <a class="back" href="/index.html">← Головна</a>
+      </header>
 
-    <section class="hud">
-      <div class="hudTitle">
-        <h1>Stroop Challenge</h1>
-        <p id="instruction">Натисніть на КОЛІР</p>
-      </div>
-      <div class="hudStats">
-        <div class="stat">
-          <span class="label">Очки</span>
-          <span class="value" id="score">0</span>
+      <section class="hud">
+        <div class="hudTitle">
+          <h1>Stroop Challenge</h1>
+          <p id="instruction">Натисніть на КОЛІР</p>
         </div>
-      </div>
-    </section>
-
-    <section class="gameCard" id="gameCard">
-      <div id="startTrigger" class="start-trigger">
-        <span>Натисніть, щоб почати</span>
-      </div>
-
-      <div id="gameContent" class="hidden">
-        <div class="lives-bar" id="lives">❤️❤️❤️</div>
-        <div class="timer-container">
-          <div id="timerBar" class="timer-bar"></div>
+        <div class="hudStats">
+          <div class="stat">
+            <span class="label">Очки</span>
+            <span class="value" id="score">0</span>
+          </div>
         </div>
-        <div id="wordDisplay" class="word-display">ЧЕРВОНИЙ</div>
-        <div class="options-grid" id="optionsGrid"></div>
-      </div>
+      </section>
 
-      <div id="resultScreen" class="result-screen hidden">
-        <h2>Гру завершено!</h2>
-        <div class="final-score" id="finalScore">0</div>
-        <p>Ваш результат</p>
-        <button class="retry-btn" onclick="location.reload()">Спробувати ще раз</button>
-      </div>
-    </section>
+      <section class="gameCard" id="gameCard">
+        <div id="startTrigger" class="start-trigger">
+          <button class="bigBtn">Почати сесію</button>
+        </div>
+
+        <div id="gameContent" class="hidden" style="width: 100%;">
+          <div class="lives-bar" id="lives">❤️❤️❤️</div>
+          <div class="timer-container">
+            <div id="timerBar" class="timer-bar"></div>
+          </div>
+          <div id="wordDisplay" class="word-display">ЧЕРВОНИЙ</div>
+          <div class="options-grid" id="optionsGrid"></div>
+        </div>
+
+        <div id="resultScreen" class="result-screen hidden">
+          <h2>Гру завершено!</h2>
+          <div class="final-score" id="finalScore">0</div>
+          <p id="finalStats" style="color: #64748b; margin-bottom: 25px;"></p>
+          <button class="retry-btn" id="retryBtn">Спробувати ще раз</button>
+        </div>
+      </section>
+      
+    </div>
+
+    <!-- Лідерборд, абсолютно позиційований праворуч -->
+    <aside class="leaderboard-card">
+      <div class="panelTitle">🏆 Таблиця лідерів</div>
+      <ol id="leaderboardList" class="leaderboard-list">
+        <li><span>Завантаження...</span></li>
+      </ol>
+    </aside>
+
   </main>
+  
+  <script type="module" src="../../auth.js"></script>
   <script src="stroop.js"></script>
 </body>
 </html>

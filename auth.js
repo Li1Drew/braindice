@@ -13,40 +13,106 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const modal = document.getElementById('authModal');
-const authBtn = document.getElementById('authBtn');
-
-authBtn.onclick = () => {
-    if (auth.currentUser) {
-        signOut(auth);
-    } else {
-        modal.classList.remove('hidden');
-    }
+window.myFirebaseAuth = auth;
+window.logoutBrainDice = async () => {
+    await signOut(auth);
 };
 
-document.querySelector('.close-modal').onclick = () => modal.classList.add('hidden');
+const modal = document.getElementById('authModal');
+const authBtn = document.getElementById('authBtn');
+const profileBtn = document.getElementById("profileBtn");
+const closeModal = document.querySelector('.close-modal');
 
-onAuthStateChanged(auth, (user) => {
+if (authBtn) {
+    authBtn.onclick = () => {
+        if (auth.currentUser) {
+            signOut(auth);
+        } else if (modal) {
+            modal.classList.remove('hidden');
+        }
+    };
+}
+
+if (closeModal && modal) {
+    closeModal.onclick = () => modal.classList.add('hidden');
+}
+
+onAuthStateChanged(auth, async (user) => {
+    // Робимо поточного користувача доступним для інших JS-файлів
+    window.myFirebaseUser = user;
+
+    // Повідомляємо інші сторінки/скрипти про зміну авторизації
+    window.dispatchEvent(
+        new CustomEvent("firebaseAuthChanged", {
+            detail: { user }
+        })
+    );
+
     if (user) {
-        authBtn.innerText = "Вийти (" + user.email.split('@')[0] + ")";
-        modal.classList.add('hidden');
+        console.log(
+            "Firebase Auth: Гравець авторизований ->",
+            user.email
+        );
+
+        if (authBtn) {
+            authBtn.innerText =
+                "Вийти (" + user.email.split("@")[0] + ")";
+        }
+        
+        if (profileBtn) {
+            profileBtn.classList.remove("hidden");
+        }
+
+        if (modal) {
+            modal.classList.add("hidden");
+        }
+
+        // Зберігаємо токен для ігрових скриптів
+        window.gameUserToken = await user.getIdToken();
+
     } else {
-        authBtn.innerText = "Увійти";
+        console.log(
+            "Firebase Auth: Гравець НЕ авторизований"
+        );
+
+        if (authBtn) {
+            authBtn.innerText = "Увійти";
+        }
+
+        window.gameUserToken = null;
     }
 });
 
 window.handleAuth = async (type) => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('email')?.value;
+    const password = document.getElementById('password')?.value;
     const message = document.getElementById('authMessage');
 
+    if (!email || !password) return;
+
     try {
+        let userCredential;
         if (type === 'register') {
-            await createUserWithEmailAndPassword(auth, email, password);
+            userCredential = await createUserWithEmailAndPassword(auth, email, password);
         } else {
-            await signInWithEmailAndPassword(auth, email, password);
+            userCredential = await signInWithEmailAndPassword(auth, email, password);
         }
+
+        const user = userCredential.user;
+        const token = await user.getIdToken();
+        const defaultName = email.split('@')[0];
+
+        await fetch("http://localhost:3000/api/users/profile", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ displayName: defaultName })
+        });
+        // -------------------------------------------------------------
+
     } catch (error) {
-        message.innerText = "Помилка: " + error.code;
+        if (message) message.innerText = "Помилка: " + error.code;
     }
 };

@@ -123,9 +123,6 @@ function updateTargetUI() {
 function handleWin(clickX, clickY) {
   const reactionTime = Date.now() - startTime;
   
-  // Логіка нарахування балів:
-  // Чим менше ms, тим більше балів. Наприклад, за 200ms на Hard дасть багато очок.
-  // Формула: (1000 / час у секундах) * множник складності
   const timeBonus = Math.max(0, Math.floor(2000 / (reactionTime / 100))); 
   const pointsEarned = timeBonus * DIFF_MULTIPLIER[currentDiff];
   
@@ -133,7 +130,6 @@ function handleWin(clickX, clickY) {
   scoreEl.textContent = score;
   gameActive = false;
 
-  // Візуальний ефект очок
   showScorePopup(clickX, clickY, `+${pointsEarned}`);
 
   arena.innerHTML = `<div style="font-size: 32px; font-weight: 800; color: #6fbf73;">⚡ ${reactionTime}ms</div>`;
@@ -171,6 +167,7 @@ function gameOver() {
       <button class="bigBtn" onclick="resetGame()">Спробувати ще раз</button>
     </div>
   `;
+  saveGameResult("reaction", score);
 }
 
 function resetGame() {
@@ -186,3 +183,79 @@ function resetGame() {
 }
 
 startBtn.onclick = spawn;
+
+async function saveGameResult(trainerName, finalScore) {
+  try {
+    if (!window.myFirebaseAuth) {
+      console.error("КРИТИЧНА ПОМИЛКА: Firebase не знайдено!");
+      return;
+    }
+
+    const user = window.myFirebaseAuth.currentUser;
+    if (!user) {
+      console.log("Гравець не авторизований.");
+      return;
+    }
+
+    const token = await user.getIdToken();
+
+    const response = await fetch("http://localhost:3000/api/results", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        trainer: trainerName,
+        score: finalScore,
+        accuracy: 0,
+        averageTime: 0,
+        difficulty: DIFF_MULTIPLIER[currentDiff]
+      })
+    });
+
+    const data = await response.json();
+    
+    if (data.status === "ok") {
+        console.log("Успіх! Результат збережено в базу:", data);
+        // ✨ МИТТЄВЕ ОНОВЛЕННЯ ЛІДЕРБОРДУ ПРИ ЗБЕРЕЖЕННІ НОВОГО РЕКОРДУ
+        loadLeaderboard();
+    } else {
+        console.error("Помилка від бекенда:", data.message);
+    }
+
+  } catch (error) {
+    console.error("Помилка з'єднання з бекендом:", error);
+  }
+}
+
+// Функція завантаження та відображення лідерборду
+async function loadLeaderboard() {
+  const listEl = document.getElementById("leaderboardList");
+  if (!listEl) return;
+
+  try {
+    const response = await fetch("http://localhost:3000/api/results/leaderboard/reaction");
+    const data = await response.json();
+
+    if (data.status === "ok" && data.leaderboard.length > 0) {
+      listEl.innerHTML = ""; 
+      
+      data.leaderboard.forEach((item) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${item.displayName}</span> <span class="lb-score">${item.score} б.</span>`;
+        listEl.appendChild(li);
+      });
+    } else {
+      listEl.innerHTML = "<li><span>Ще немає рекордів</span></li>";
+    }
+  } catch (error) {
+    console.error("Помилка завантаження лідерборду:", error);
+    listEl.innerHTML = "<li><span>Помилка завантаження</span></li>";
+  }
+}
+
+// Викликаємо функцію одразу при завантаженні сторінки гри
+document.addEventListener("DOMContentLoaded", () => {
+  loadLeaderboard();
+});

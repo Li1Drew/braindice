@@ -9,55 +9,69 @@
 <body class="theme-reaction">
 
   <main class="page">
-    <header class="topbar">
-      <a class="back" href="/index.html">← Головна</a>
-    </header>
+    
+    <!-- Контейнер гри по центру -->
+    <div class="game-container">
+      <header class="topbar">
+        <a class="back" href="/index.html">← Головна</a>
+      </header>
 
-    <section class="hud">
-      <div class="hudTitle">
-        <h1>Reaction</h1>
-        <p>Швидкість та точність — запорука високого результату!</p>
-      </div>
-
-      <div class="hudStats">
-        <div class="stat">
-          <span class="label">Життя</span>
-          <span class="value" id="lives">❤️❤️❤️</span>
-        </div>
-        <div class="stat">
-          <span class="label">Рахунок</span>
-          <span class="value" id="score">0</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="gameCard">
-      <div class="controls-row">
-        <div class="panel target-panel">
-          <div class="panelTitle">Твоя ціль</div>
-          <div id="targetBox" class="targetBox">?</div>
+      <section class="hud">
+        <div class="hudTitle">
+          <h1>Reaction</h1>
+          <p>Швидкість та точність — запорука високого результату!</p>
         </div>
 
-        <div class="panel settings-panel">
-          <div class="panelTitle">Конфігурація</div>
-          <div class="toggle-group">
-            <button class="modeBtn active" data-mode="color">Кольори</button>
-            <button class="modeBtn" data-mode="symbol">Символи</button>
+        <div class="hudStats">
+          <div class="stat">
+            <span class="label">Життя</span>
+            <span class="value" id="lives">❤️❤️❤️</span>
           </div>
-          <div class="diff-group">
-            <button class="diffBtn active" data-diff="easy">Легко</button>
-            <button class="diffBtn" data-diff="medium">Середньо</button>
-            <button class="diffBtn" data-diff="hard">Важко</button>
+          <div class="stat">
+            <span class="label">Рахунок</span>
+            <span class="value" id="score">0</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div id="arena" class="arena">
-        <div id="startBtn" class="bigBtn">Почати тест</div>
-      </div>
-    </section>
+      <section class="gameCard">
+        <div class="controls-row">
+          <div class="panel target-panel">
+            <div class="panelTitle">Твоя ціль</div>
+            <div id="targetBox" class="targetBox">?</div>
+          </div>
+
+          <div class="panel settings-panel">
+            <div class="panelTitle">Конфігурація</div>
+            <div class="toggle-group">
+              <button class="modeBtn active" data-mode="color">Кольори</button>
+              <button class="modeBtn" data-mode="symbol">Символи</button>
+            </div>
+            <div class="diff-group">
+              <button class="diffBtn active" data-diff="easy">Легко</button>
+              <button class="diffBtn" data-diff="medium">Середньо</button>
+              <button class="diffBtn" data-diff="hard">Важко</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="arena" class="arena">
+          <div id="startBtn" class="bigBtn">Почати тест</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Лідерборд праворуч -->
+    <aside class="leaderboard-card">
+      <div class="panelTitle">🏆 Таблиця лідерів</div>
+      <ol id="leaderboardList" class="leaderboard-list">
+        <li><span>Завантаження...</span></li>
+      </ol>
+    </aside>
+
   </main>
 
+  <script type="module" src="../../auth.js"></script>
   <script src="reaction.js"></script>
 </body>
 </html>
