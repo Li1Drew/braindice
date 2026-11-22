@@ -3,12 +3,14 @@ const { getFirestore } = require("firebase-admin/firestore");
 const { getAuth } = require("firebase-admin/auth");
 const path = require("path");
 
-const serviceAccountPath = path.join(
-  __dirname,
-  "serviceAccountKey.json"
-);
+let serviceAccount;
 
-const serviceAccount = require(serviceAccountPath);
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+  const serviceAccountPath = path.join(__dirname, "serviceAccountKey.json");
+  serviceAccount = require(serviceAccountPath);
+}
 
 const app = getApps().length
   ? getApps()[0]

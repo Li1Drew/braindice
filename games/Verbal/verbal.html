@@ -3,74 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verbal Mastery — BrainDice</title>
+  <title>Verbal — BrainDice</title>
   <link rel="stylesheet" href="verbal.css">
 </head>
-<body>
+<body class="theme-verbal">
+
   <main class="page">
-    <header class="topbar">
-      <a class="nav-btn" href="/index.html">← Головна</a>
-      
-      <div id="gameStats" class="stats-pills hidden">
-        <div class="pill">❤️ <span id="livesDisplay">3</span></div>
-        <div class="pill">⭐ <span id="scoreDisplay">0</span></div>
-      </div>
+    
+    <div class="game-container">
+      <header class="topbar">
+        <a class="back" href="/index.html">← Головна</a>
+      </header>
 
-      <button id="toModes" class="nav-btn hidden" onclick="location.reload()">До режимів →</button>
-    </header>
-
-    <section class="gameCard" id="mainCard">
-      <div id="modeSelection" class="mode-menu">
-        <h1>Verbal Mastery</h1>
-        <p class="subtitle">Оберіть тип когнітивного навантаження</p>
-        
-        <div class="menu-grid">
-          <div onclick="startGame('builder')" class="menu-card card-orange">
-            <div class="card-icon">🧩</div>
-            <div class="card-info">
-              <h3>Builder</h3>
-              <p>Зберіть слово з літер</p>
-            </div>
+      <section class="hud">
+        <div class="hudTitle">
+          <h1>Verbal</h1>
+          <p>Словниковий запас та лінгвістична гнучкість</p>
+        </div>
+        <div class="hudStats">
+          <div class="stat">
+            <span class="label">Життя</span>
+            <span class="value" id="lives">❤️❤️❤️</span>
           </div>
-
-          <div onclick="startGame('missing')" class="menu-card card-yellow">
-            <div class="card-icon">🔍</div>
-            <div class="card-info">
-              <h3>Missing</h3>
-              <p>Вставте літеру, якої бракує</p>
-            </div>
+          <div class="stat">
+            <span class="label">Рівень</span>
+            <span class="value" id="level">1</span>
           </div>
-
-          <div onclick="startGame('synonym')" class="menu-card card-red">
-            <div class="card-icon">🔄</div>
-            <div class="card-info">
-              <h3>Synonyms</h3>
-              <p>Знайдіть близьке за значенням</p>
-            </div>
+          <div class="stat">
+            <span class="label">Рахунок</span>
+            <span class="value" id="score">0</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div id="gameArea" class="hidden">
-        <div class="game-header">
-          <span id="taskInstruction">Завдання</span>
-          <div class="timer-line"><div id="timerBar"></div></div>
+      <section class="gameCard">
+        <div id="startTrigger" class="start-trigger">
+          <button id="startBtn" class="bigBtn" disabled>Завантаження бази...</button>
         </div>
 
-        <div id="contentDisplay" class="word-main"></div>
+        <div id="gameContent" class="hidden" style="width: 100%;">
+          <div class="timer-container">
+            <div id="timerBar" class="timer-bar"></div>
+          </div>
+          
+          <div class="rule-container">
+            <div class="panelTitle" id="taskTitle">Завдання</div>
+            <div id="displayWord" class="word-main">СЛОВО</div>
+          </div>
 
-        <div id="interactionArea" class="action-zone"></div>
-      </div>
-
-      <div id="resultScreen" class="result-view hidden">
-        <div class="circle-score">
-          <span id="finalScore">0</span>
+          <div id="interactionArea" class="action-zone"></div>
         </div>
-        <h3>Тренування завершено!</h3>
-        <button class="retry-btn" onclick="location.reload()">Спробувати ще раз</button>
-      </div>
-    </section>
+
+        <div id="resultScreen" class="result-screen hidden">
+          <h2>Сесію завершено!</h2>
+          <div class="final-score" id="finalScore">0</div>
+          <p id="finalStats" style="color: #64748b; margin-bottom: 25px;"></p>
+          <button class="retry-btn" id="retryBtn">Спробувати ще раз</button>
+        </div>
+      </section>
+    </div>
+
+    <aside class="leaderboard-card">
+      <div class="panelTitle">🏆 Таблиця лідерів</div>
+      <ol id="leaderboardList" class="leaderboard-list">
+        <li><span>Завантаження...</span></li>
+      </ol>
+    </aside>
+
   </main>
+  
+  <script type="module" src="../../auth.js"></script>
   <script src="verbal.js"></script>
 </body>
 </html>

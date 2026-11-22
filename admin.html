@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS BrainDice — Адмін-панель</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #f8fafc; margin: 0; font-family: 'Inter', sans-serif; color: #1e293b; }
+        .admin-wrapper { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .admin-header h1 { margin: 0; font-size: 24px; color: #0f172a; }
+        .back-link { text-decoration: none; background: white; padding: 8px 16px; border-radius: 12px; font-weight: 600; color: #64748b; border: 1px solid #e2e8f0; transition: 0.2s; }
+        .back-link:hover { background: #f1f5f9; color: #0f172a; }
+
+        .admin-card { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; }
+        
+        /* Вкладки */
+        .tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        .tab-btn { background: transparent; border: none; font-size: 15px; font-weight: 700; color: #94a3b8; cursor: pointer; padding: 8px 16px; border-radius: 12px; transition: 0.2s; }
+        .tab-btn.active { background: #eff6ff; color: #3b82f6; }
+        
+        /* Поля */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 800; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-control { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-size: 15px; font-family: inherit; color: #0f172a; transition: 0.2s; box-sizing: border-box; }
+        .form-control:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        textarea.form-control { resize: vertical; min-height: 200px; font-family: monospace; font-size: 13px; line-height: 1.5; }
+        
+        /* Блоки полів */
+        .fields-box { background: #f8fafc; padding: 20px; border-radius: 16px; border: 1px solid #f1f5f9; margin-bottom: 20px; }
+        
+        .btn-submit { background: #3b82f6; color: white; border: none; padding: 16px; width: 100%; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2); }
+        .btn-submit:hover { background: #2563eb; transform: translateY(-2px); }
+        .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+        
+        .status-msg { margin-top: 20px; padding: 12px; border-radius: 10px; font-weight: 600; text-align: center; display: none; }
+        .status-msg.success { background: #ecfdf5; color: #059669; display: block; }
+        .status-msg.error { background: #fef2f2; color: #dc2626; display: block; }
+
+        .hidden { display: none !important; }
+        
+        #adminLock { text-align: center; padding: 60px 20px; }
+        .lock-icon { font-size: 48px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-wrapper">
+        <header class="admin-header">
+            <h1>⚙️ Управління базою слів</h1>
+            <a href="/index.html" class="back-link">← На головну</a>
+        </header>
+
+        <div id="adminLock" class="admin-card">
+            <div class="lock-icon">🔒</div>
+            <h2>Перевірка доступу...</h2>
+        </div>
+
+        <main id="adminPanel" class="admin-card hidden">
+            
+            <div class="tabs">
+                <button id="tabSingle" class="tab-btn active">📝 Додати одне слово</button>
+                <button id="tabBulk" class="tab-btn">📦 Масове завантаження</button>
+            </div>
+
+            <div id="viewSingle">
+                <div class="form-group">
+                    <label>Категорія тренажера</label>
+                    <select id="taskMode" class="form-control">
+                        <option value="builder">Анаграма (Скласти слово з літер)</option>
+                        <option value="synonym">Синоніми (Обрати з 4 варіантів)</option>
+                        <option value="missing">Пропущена літера (Вставити літеру)</option>
+                    </select>
+                </div>
+
+                <div id="fieldsBuilder" class="fields-box">
+                    <div class="form-group">
+                        <label>Слово (Відповідь)</label>
+                        <input type="text" id="b_word" class="form-control" placeholder="Наприклад: ПРОГРАМА" style="text-transform: uppercase;">
+                    </div>
+                    <div class="form-group">
+                        <label>Перемішані літери (Питання)</label>
+                        <input type="text" id="b_scrambled" class="form-control" placeholder="Наприклад: МАРГОПРА" style="text-transform: uppercase;">
+                    </div>
+                </div>
+
+                <div id="fieldsOptions" class="fields-box hidden">
+                    <div class="form-group">
+                        <label id="optLabelMain">Питання / Слово</label>
+                        <input type="text" id="o_main" class="form-control" placeholder="Слово або текст із пропуском">
+                    </div>
+                    <div class="form-group">
+                        <label>Правильна відповідь</label>
+                        <input type="text" id="o_correct" class="form-control" placeholder="Точно співпадає з одним з варіантів">
+                    </div>
+                    <div class="form-group">
+                        <label>Варіант 1 (Правильний)</label>
+                        <input type="text" id="o_opt1" class="form-control" placeholder="Варіант 1">
+                    </div>
+                    <div class="form-group">
+                        <label>Варіанти 2, 3, 4 (Через кому)</label>
+                        <input type="text" id="o_opt234" class="form-control" placeholder="Наприклад: Поганий, Злий, Сумний">
+                    </div>
+                </div>
+            </div>
+
+            <div id="viewBulk" class="hidden">
+                <div class="form-group">
+                    <label>Вставте JSON-масив зі словами</label>
+                    <textarea id="bulkJson" class="form-control" placeholder='[
+  { "mode": "missing", "text": "Т_СТ", "correct": "Е", "options": ["Е", "О", "А", "І"] },
+  { "mode": "builder", "word": "АДМІН", "scrambled": "ДМІНА" }
+]'></textarea>
+                </div>
+            </div>
+
+            <button id="saveBtn" class="btn-submit">Зберегти в базу</button>
+            <div id="statusMsg" class="status-msg"></div>
+
+        </main>
+    </div>
+
+    <script type="module" src="auth.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

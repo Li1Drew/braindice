@@ -4,6 +4,7 @@ const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const resultRoutes = require("./routes/resultRoutes");
 const statsRoutes = require("./routes/statsRoutes");
+const verbalRoutes = require('./routes/verbalRoutes');
 
 const { logInfo, logError } = require("./utils/logger");
 
@@ -17,7 +18,6 @@ const PORT = process.env.PORT || 3000;
 // ---------------------------------------------------------
 
 app.use(cors());
-
 app.use(express.json());
 
 
@@ -26,12 +26,10 @@ app.use(express.json());
 // ---------------------------------------------------------
 
 app.get("/api/health", (req, res) => {
-
   res.json({
     status: "ok",
     message: "BrainDice backend працює"
   });
-
 });
 
 
@@ -40,22 +38,20 @@ app.get("/api/health", (req, res) => {
 // ---------------------------------------------------------
 
 app.use("/api/users", userRoutes);
-
 app.use("/api/results", resultRoutes);
-
 app.use("/api/stats", statsRoutes);
+app.use('/api/verbal', verbalRoutes);
+
 
 // ---------------------------------------------------------
 // 404
 // ---------------------------------------------------------
 
 app.use((req, res) => {
-
   res.status(404).json({
     status: "error",
     message: "Маршрут не знайдено"
   });
-
 });
 
 
@@ -64,14 +60,12 @@ app.use((req, res) => {
 // ---------------------------------------------------------
 
 app.use((err, req, res, next) => {
-
   logError("Невідома помилка сервера", err);
 
   res.status(500).json({
     status: "error",
     message: "Внутрішня помилка сервера"
   });
-
 });
 
 
@@ -80,9 +74,5 @@ app.use((err, req, res, next) => {
 // ---------------------------------------------------------
 
 app.listen(PORT, () => {
-
-  logInfo(
-    `BrainDice backend запущено на http://localhost:${PORT}`
-  );
-
+  logInfo(`Server running on port ${PORT}`);
 });

@@ -1,159 +1,260 @@
-const shapes = ['▲', '■', '●', '◆', '★', '✖'];
-const colors = ['#10b981', '#3b82f6', '#ef4444', '#f59e0b', '#8b5cf6'];
-let score = 0, level = 1, correctAnswer;
-
+const startBtn = document.getElementById('startBtn');
 const startTrigger = document.getElementById('startTrigger');
 const gameContent = document.getElementById('gameContent');
-const gameZone = document.getElementById('gameZone');
+const resultScreen = document.getElementById('resultScreen');
+
+const sequenceBox = document.getElementById('sequenceBox');
 const optionsGrid = document.getElementById('optionsGrid');
-const answerSection = document.getElementById('answerSection');
-const instruction = document.getElementById('instruction');
+const timerBar = document.getElementById('timerBar');
 
-function initLevel() {
-    gameZone.innerHTML = '';
+const livesEl = document.getElementById('lives');
+const levelEl = document.getElementById('level');
+const scoreEl = document.getElementById('score');
+
+const finalScoreEl = document.getElementById('finalScore');
+const finalStatsEl = document.getElementById('finalStats');
+const retryBtn = document.getElementById('retryBtn');
+const leaderboardList = document.getElementById('leaderboardList');
+
+// Ігрові змінні
+let score = 0;
+let level = 1;
+let lives = 3;
+let correctAnswers = 0;
+let totalAnswers = 0;
+let gameActive = false;
+let currentAnswer = null;
+
+// Таймер (60 секунд на сесію)
+const SESSION_TIME = 60;
+let timeLeft = SESSION_TIME;
+let timerInterval;
+
+// Завантаження лідерборду при відкритті сторінки
+document.addEventListener('DOMContentLoaded', loadLeaderboard);
+
+function startGame() {
+    score = 0;
+    level = 1;
+    lives = 3;
+    correctAnswers = 0;
+    totalAnswers = 0;
+    timeLeft = SESSION_TIME;
+    gameActive = true;
+
+    updateHUD();
+    startTrigger.classList.add('hidden');
+    resultScreen.classList.add('hidden');
+    gameContent.classList.remove('hidden');
+
+    startTimer();
+    nextPattern();
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    timerBar.style.width = '100%';
+    
+    timerInterval = setInterval(() => {
+        timeLeft -= 0.1;
+        const percentage = (timeLeft / SESSION_TIME) * 100;
+        timerBar.style.width = `${percentage}%`;
+
+        if (timeLeft <= 0) {
+            endGame();
+        }
+    }, 100);
+}
+
+// ==========================================
+// ПРОЦЕДУРНА ГЕНЕРАЦІЯ ПАТЕРНІВ
+// ==========================================
+function generatePatternData(currentLevel) {
+    // Визначаємо складність (від 0 до 4)
+    let type = Math.floor(Math.random() * Math.min(1 + Math.floor(currentLevel / 3), 5));
+    let seq = [];
+    let ans;
+
+    if (type === 0) {
+        // 1. Арифметична прогресія (+N або -N)
+        let step = Math.floor(Math.random() * 5) + 1 + Math.floor(currentLevel / 2);
+        let start = Math.floor(Math.random() * 20);
+        for(let i = 0; i < 4; i++) seq.push(start + i * step);
+        ans = start + 4 * step;
+    } 
+    else if (type === 1) {
+        // 2. Альтернуюча прогресія (+A, -B)
+        let step1 = Math.floor(Math.random() * 5) + 2;
+        let step2 = Math.floor(Math.random() * 3) + 1;
+        let current = Math.floor(Math.random() * 10) + 5;
+        seq.push(current);
+        for(let i = 1; i < 5; i++) {
+            current += (i % 2 !== 0) ? step1 : -step2;
+            if (i < 4) seq.push(current);
+            else ans = current;
+        }
+    } 
+    else if (type === 2) {
+        // 3. Геометрична прогресія (*N)
+        let step = Math.floor(Math.random() * 2) + 2; // *2 або *3
+        let start = Math.floor(Math.random() * 3) + 1;
+        for(let i = 0; i < 4; i++) seq.push(start * Math.pow(step, i));
+        ans = start * Math.pow(step, 4);
+    } 
+    else if (type === 3) {
+        // 4. Подібна до Фібоначчі (сума двох попередніх)
+        let a = Math.floor(Math.random() * 3) + 1;
+        let b = Math.floor(Math.random() * 3) + 1;
+        seq.push(a, b);
+        for(let i = 2; i < 4; i++) seq.push(seq[i-1] + seq[i-2]);
+        ans = seq[3] + seq[2];
+    } 
+    else {
+        // 5. Квадрати чисел
+        let start = Math.floor(Math.random() * 5) + 1;
+        for(let i = 0; i < 4; i++) seq.push(Math.pow(start + i, 2));
+        ans = Math.pow(start + 4, 2);
+    }
+
+    // Генерація 4 варіантів відповідей
+    let options = new Set([ans]);
+    while(options.size < 4) {
+        let offset = Math.floor(Math.random() * 7) - 3;
+        if(offset === 0) offset = 5;
+        let fake = ans + offset;
+        if (fake >= 0 && fake !== ans) options.add(fake);
+    }
+    
+    return {
+        sequenceText: seq.join(", ") + ", ?",
+        correct: ans,
+        options: Array.from(options).sort(() => Math.random() - 0.5)
+    };
+}
+
+function nextPattern() {
+    if (!gameActive) return;
+
+    const patternData = generatePatternData(level);
+    currentAnswer = patternData.correct;
+    
+    sequenceBox.textContent = patternData.sequenceText;
     optionsGrid.innerHTML = '';
-    answerSection.classList.add('hidden');
-    gameZone.className = 'game-zone';
 
-    const modes = ['matrix', 'odd_one', 'sequence'];
-    const currentMode = modes[Math.floor(Math.random() * modes.length)];
-
-    if (currentMode === 'matrix') {
-        instruction.textContent = "Доповніть логічну матрицю";
-        gameZone.classList.add('mode-matrix');
-        answerSection.classList.remove('hidden');
-        generateMatrix();
-    } else if (currentMode === 'odd_one') {
-        instruction.textContent = "Знайдіть елемент, що порушує правило";
-        gameZone.classList.add('mode-odd');
-        generateOddOne();
-    } else {
-        instruction.textContent = "Продовжте послідовність";
-        gameZone.classList.add('mode-sequence');
-        answerSection.classList.remove('hidden');
-        generateSequence();
-    }
+    patternData.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt;
+        btn.onclick = () => handleAnswer(opt, btn);
+        optionsGrid.appendChild(btn);
+    });
 }
 
-function handleResponse(element, isCorrect) {
-    if (isCorrect) {
-        element.classList.add('correct');
-        setTimeout(() => {
-            score += 25; level++;
-            document.getElementById('score').textContent = score;
-            document.getElementById('level').textContent = level;
-            initLevel();
-        }, 450);
+function handleAnswer(selected, btnEl) {
+    if (!gameActive) return;
+    totalAnswers++;
+
+    if (selected === currentAnswer) {
+        // Правильно
+        correctAnswers++;
+        score += (10 + level * 2);
+        level++;
+        btnEl.style.backgroundColor = '#10b981';
+        btnEl.style.color = 'white';
+        
+        updateHUD();
+        setTimeout(nextPattern, 200);
     } else {
-        element.classList.add('wrong');
-        document.querySelector('.gameCard').classList.add('error-shake');
+        // Неправильно
+        lives--;
+        btnEl.style.backgroundColor = '#ef4444';
+        btnEl.style.color = 'white';
+        document.querySelector('.gameCard').classList.add('error-shake'); // Додай анімацію в CSS якщо треба
+        
+        updateHUD();
         setTimeout(() => {
-            element.classList.remove('wrong');
             document.querySelector('.gameCard').classList.remove('error-shake');
-        }, 450);
+            if (lives <= 0) {
+                endGame();
+            } else {
+                nextPattern();
+            }
+        }, 400);
     }
 }
 
-function createShape(item) {
-    const group = document.createElement('div');
-    group.className = 'shape-group';
-    group.style.color = item.color;
-    group.style.transform = `rotate(${item.rotate}deg)`;
-    for (let i = 0; i < item.count; i++) {
-        const span = document.createElement('span');
-        span.textContent = item.shape;
-        group.appendChild(span);
-    }
-    return group;
+function updateHUD() {
+    scoreEl.textContent = score;
+    levelEl.textContent = level;
+    livesEl.textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
 }
 
-// --- Режими ГРИ ---
+async function endGame() {
+    gameActive = false;
+    clearInterval(timerInterval);
+    
+    gameContent.classList.add('hidden');
+    resultScreen.classList.remove('hidden');
 
-function generateMatrix() {
-    const s = [...shapes].sort(() => 0.5 - Math.random());
-    const c = [...colors].sort(() => 0.5 - Math.random());
-    let data = [];
-    const offset = Math.floor(Math.random() * 3);
+    const accuracy = totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0;
+    
+    finalScoreEl.textContent = score;
+    finalStatsEl.innerHTML = `
+        Рівень: <strong>${level}</strong> | 
+        Точність: <strong>${accuracy}%</strong>
+    `;
 
-    for (let r = 0; r < 3; r++) {
-        for (let col = 0; col < 3; col++) {
-            data.push({ shape: s[(r+col+offset)%3], color: c[(r+col+offset)%3], rotate: r*90, count: 1 });
+    // Зберігаємо на бекенд
+    if (window.gameUserToken) {
+        try {
+            await fetch("http://localhost:3000/api/results", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${window.gameUserToken}`
+                },
+                body: JSON.stringify({
+                    trainer: "pattern", // ЗМІНЕНО: gameId на trainer
+                    score: score,
+                    accuracy: accuracy,
+                    averageTime: 0, // Додано для сумісності з бекендом
+                    difficulty: 1   // Додано для сумісності з бекендом
+                })
+            });
+            loadLeaderboard(); // Оновлюємо лідерборд
+        } catch (error) {
+            console.error("Помилка збереження результату:", error);
         }
     }
-    correctAnswer = data[8];
-    data.forEach((item, i) => {
-        const cell = document.createElement('div');
-        cell.className = (i === 8) ? 'cell empty' : 'cell';
-        if (i !== 8) cell.appendChild(createShape(item));
-        else cell.textContent = '?';
-        gameZone.appendChild(cell);
-    });
-    renderOptions(correctAnswer);
 }
 
-function generateOddOne() {
-    const s = shapes[Math.floor(Math.random()*shapes.length)];
-    const c1 = colors[0], c2 = colors[2];
-    const oddIdx = Math.floor(Math.random() * 6);
-    
-    for (let i = 0; i < 6; i++) {
-        const item = { shape: s, color: (i === oddIdx) ? c2 : c1, rotate: (i === oddIdx) ? 45 : 0, count: 1 };
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.appendChild(createShape(item));
-        cell.onclick = () => handleResponse(cell, i === oddIdx);
-        gameZone.appendChild(cell);
+async function loadLeaderboard() {
+    try {
+        // ЗМІНЕНО: шлях змінено на /pattern замість ?game=pattern
+        const response = await fetch("http://localhost:3000/api/results/leaderboard/pattern");
+        if (!response.ok) throw new Error("Помилка завантаження");
+        
+        const data = await response.json();
+        leaderboardList.innerHTML = '';
+
+        if (data.status === "ok" && data.leaderboard && data.leaderboard.length > 0) {
+            data.leaderboard.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${index + 1}. ${item.displayName}</span>
+                    <span class="lb-score">${item.score} б.</span>
+                `;
+                leaderboardList.appendChild(li);
+            });
+        } else {
+            leaderboardList.innerHTML = '<li><span>Ще немає результатів</span></li>';
+        }
+    } catch (error) {
+        console.error("Помилка лідерборду:", error);
+        leaderboardList.innerHTML = '<li><span>Не вдалося завантажити</span></li>';
     }
 }
 
-function generateSequence() {
-    const s = shapes[Math.floor(Math.random()*shapes.length)];
-    const c = colors[Math.floor(Math.random()*colors.length)];
-    let seq = [];
-    for (let i = 0; i < 5; i++) {
-        seq.push({ shape: s, color: c, rotate: i * 90, count: 1 });
-    }
-    correctAnswer = seq[4];
-    seq.forEach((item, i) => {
-        const cell = document.createElement('div');
-        cell.className = (i === 4) ? 'cell empty' : 'cell';
-        if (i !== 4) cell.appendChild(createShape(item));
-        else cell.textContent = '?';
-        gameZone.appendChild(cell);
-    });
-    renderOptions(correctAnswer);
-}
-
-function renderOptions(correct) {
-    let opts = [correct];
-    let attempts = 0;
-
-    // Гарантуємо 6 унікальних варіантів
-    while(opts.length < 6 && attempts < 200) {
-        attempts++;
-        let f = { 
-            shape: shapes[Math.floor(Math.random()*shapes.length)], 
-            color: colors[Math.floor(Math.random()*colors.length)], 
-            rotate: Math.floor(Math.random()*4)*90, 
-            count: 1 
-        };
-        const isDuplicate = opts.some(o => 
-            o.shape === f.shape && o.color === f.color && o.rotate === f.rotate
-        );
-        if (!isDuplicate) opts.push(f);
-    }
-
-    opts.sort(() => 0.5 - Math.random()).forEach(opt => {
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.appendChild(createShape(opt));
-        div.onclick = () => handleResponse(div, JSON.stringify(opt) === JSON.stringify(correct));
-        optionsGrid.appendChild(div);
-    });
-}
-
-startTrigger.onclick = () => {
-    startTrigger.classList.add('hidden');
-    gameContent.classList.remove('hidden');
-    initLevel();
-};
+// Слухачі кнопок
+startBtn.addEventListener('click', startGame);
+retryBtn.addEventListener('click', startGame);

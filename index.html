@@ -24,17 +24,10 @@
     </div>
     
     <div class="header-actions">
-  <a
-    id="profileBtn"
-    class="profile-trigger hidden"
-    href="/profile.html"
-  >
-    🧩 Профіль
-  </a>
-
-  <button id="authBtn" class="auth-trigger">
-    Увійти
-  </button>
+  <a id="adminBtn" class="profile-trigger hidden" href="/admin.html" style="background: #f59e0b; color: white; border: none;"> ⚙️ Адмін</a>
+  
+  <a id="profileBtn" class="profile-trigger hidden" href="/profile.html">🧩 Профіль</a>
+  <button id="authBtn" class="auth-trigger">Увійти</button>
 </div>
 </header>
 
@@ -45,7 +38,12 @@
     </section>
 
     <section class="grid" id="gamesGrid">
+      
       <article class="card">
+        <div class="info-wrapper">
+          <span class="info-icon">i</span>
+          <div class="info-tooltip">Тренування швидкості реакції. Уважно слідкуйте за завданням і натискайте на екран лише тоді, коли з'явиться правильний колір або символ.</div>
+        </div>
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#cfe9ff"/></svg></div>
         <h3 class="card-title">Reaction</h3>
         <p class="card-desc">Швидкість реакції на візуальний стимул.</p>
@@ -53,6 +51,10 @@
       </article>
 
       <article class="card">
+        <div class="info-wrapper">
+          <span class="info-icon">i</span>
+          <div class="info-tooltip">Тренування зорової пам'яті. Запам'ятовуйте підсвічені квадрати або послідовність цифр і відтворюйте їх без помилок.</div>
+        </div>
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#ffdede"/></svg></div>
         <h3 class="card-title">Memory</h3>
         <p class="card-desc">Робоча пам'ять та відтворення послідовностей.</p>
@@ -60,6 +62,10 @@
       </article>
 
       <article class="card">
+        <div class="info-wrapper">
+          <span class="info-icon">i</span>
+          <div class="info-tooltip">Розвиток багатозадачності. Виконуйте два різні завдання одночасно, щоб навчити мозок швидко перемикати увагу.</div>
+        </div>
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#e9ddff"/></svg></div>
         <h3 class="card-title">Dual Task</h3>
         <p class="card-desc">Розподіл уваги між двома різними завданнями.</p>
@@ -67,6 +73,10 @@
       </article>
 
       <article class="card">
+        <div class="info-wrapper">
+          <span class="info-icon">i</span>
+          <div class="info-tooltip">Логіка та уважність. Аналізуйте фігури або символи на екрані, щоб знайти закономірність і обрати правильне продовження.</div>
+        </div>
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#dff7ef"/></svg></div>
         <h3 class="card-title">Pattern Decoder</h3>
         <p class="card-desc">Логічне мислення та пошук закономірностей.</p>
@@ -74,6 +84,10 @@
       </article>
 
       <article class="card">
+        <div class="info-wrapper">
+          <span class="info-icon">i</span>
+          <div class="info-tooltip">Розвиток мовних навичок. Вгадуйте пропущені літери, шукайте синоніми та розв'язуйте анаграми на швидкість.</div>
+        </div>
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#ffe8c7"/></svg></div>
         <h3 class="card-title">Verbal</h3>
         <p class="card-desc">Слова · логіка · словниковий запас (кілька режимів).</p>
@@ -81,6 +95,10 @@
       </article>
 
       <article class="card">
+        <div class="info-wrapper">
+          <span class="info-icon">i</span>
+          <div class="info-tooltip">Когнітивна гнучкість. Обирайте колір, яким написано слово, ігноруючи значення самого слова. Ламає звичні шаблони!</div>
+        </div>
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#ee7373"/></svg></div>
         <h3 class="card-title">Stroop</h3>
         <p class="card-desc">Тренажер Уваги (тест на когнітивну гнучкість)</p>
@@ -88,6 +106,10 @@
       </article>
 
       <article class="card">
+        <div class="info-wrapper">
+          <span class="info-icon">i</span>
+          <div class="info-tooltip">Увага до деталей. Швидко знайдіть унікальний об'єкт, який відрізняється від інших хоча б однією дрібницею.</div>
+        </div>
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#e6fffa"/></svg></div>
         <h3 class="card-title">Find The Odd</h3>
         <p class="card-desc">Увага та швидка класифікація</p>
@@ -95,25 +117,62 @@
       </article>
 
       <article class="card">
+        <div class="info-wrapper">
+          <span class="info-icon">i</span>
+          <div class="info-tooltip">Тренування окоміру. Швидко визначайте кількість об'єктів на екрані без точного підрахунку.</div>
+        </div>
         <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="#fffaf5"/></svg></div>
         <h3 class="card-title">Estimation</h3>
         <p class="card-desc">Швидка візуальна оцінка без підрахунку</p>
         <div class="card-footer"><a class="play" href="/games/estimation/estimation.html">Грати</a></div>
       </article>
+
     </section>
   </main>
 
   <div id="authModal" class="modal-overlay hidden">
-    <div class="modal-content">
+    <div class="modal-content auth-card">
       <button class="close-modal" id="closeModal">&times;</button>
-      <div id="authForm">
-        <h2 id="modalTitle">Вхід у BrainDice</h2>
-        <input type="email" id="email" placeholder="Електронна пошта">
-        <input type="password" id="password" placeholder="Пароль (мін. 6 символів)">
-        <p id="authMessage" class="error-text"></p>
-        <button class="btn-primary" onclick="handleAuth('login')">Увійти</button>
-        <button class="btn-secondary" onclick="handleAuth('register')">Створити акаунт</button>
+      
+      <div class="auth-tabs">
+        <button id="tabLogin" class="tab-btn active">Вхід</button>
+        <button id="tabRegister" class="tab-btn">Реєстрація</button>
       </div>
+
+      <div id="loginForm" class="auth-form">
+        <h2>З поверненням!</h2>
+        <div class="input-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="mail@example.com">
+        </div>
+        <div class="input-group">
+          <label for="loginPassword">Пароль</label>
+          <input type="password" id="loginPassword" placeholder="••••••••">
+        </div>
+        <button type="button" class="btn-secondary" id="forgotPasswordBtn" style="text-align: right; margin-top: -5px;">Забули пароль?</button>
+        <button class="btn-primary" onclick="handleAuth('login')">Увійти</button>
+        <p id="loginMessage" class="error-text hidden"></p>
+      </div>
+
+      <div id="registerForm" class="auth-form hidden">
+        <h2>Створити акаунт</h2>
+        <div class="input-group">
+          <label for="regNickname">Нікнейм</label>
+          <input type="text" id="regNickname" placeholder="Введіть ваш ігровий нік">
+        </div>
+        <div class="input-group">
+          <label for="regEmail">Email</label>
+          <input type="email" id="regEmail" placeholder="Введіть вашу пошту">
+        </div>
+        <div class="input-group">
+          <label for="regPassword">Пароль</label>
+          <input type="password" id="regPassword" placeholder="Мінімум 6 символів">
+        </div>
+        <button class="btn-primary" onclick="handleAuth('register')">Зареєструватися</button>
+        <p id="regMessage" class="error-text hidden"></p>
+        <p id="regSuccess" class="success-text hidden">Акаунт створено! Перевірте вашу пошту для підтвердження.</p>
+      </div>
+
     </div>
   </div>
 

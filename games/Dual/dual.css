@@ -109,3 +109,47 @@ body {
     margin-top: 24px;
   }
 }
+
+/* =========================================
+   АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ ТЕЛЕФОНІВ (< 768px)
+========================================= */
+@media (max-width: 768px) {
+  /* Загальні зменшення відступів */
+  body { padding: 10px; }
+  .page { padding: 0; }
+  
+  /* HUD (Верхня панель зі статистикою) стає вертикальною */
+  .hud { 
+    flex-direction: column; 
+    gap: 15px; 
+    padding: 16px;
+    text-align: center;
+  }
+  .hudStats { justify-content: center; width: 100%; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 80px; padding: 8px 12px; margin: 0; }
+
+  /* Картки ігор */
+  .gameCard, .leaderboard-card { padding: 16px; border-radius: 20px; }
+  
+  /* ⚡ REACTION & DUAL TASK: Ламаємо 2 колонки в 1 */
+  .controls-row, .dual-layout { 
+    grid-template-columns: 1fr; 
+    gap: 16px; 
+  }
+  
+  /* 🧠 MEMORY: Ламаємо панель коду і саму сітку в 1 колонку */
+  .memory-layout { 
+    grid-template-columns: 1fr; 
+  }
+  .digitBox { font-size: 24px; min-height: 50px; }
+  
+  /* 🎨 STROOP: Зменшуємо величезний текст */
+  .word-display { font-size: 40px; margin-bottom: 25px; }
+  .options-grid { gap: 8px; }
+  .color-btn { height: 55px; font-size: 14px; }
+  
+  /* Загальні елементи та кнопки */
+  .arena { height: 300px; } /* Зменшуємо висоту арени Reaction */
+  .equation { font-size: 26px; }
+  .bigBtn { padding: 14px 24px; font-size: 16px; width: 100%; }
+}
