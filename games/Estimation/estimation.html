@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estimation — BrainDice</title>
+  <link rel="stylesheet" href="estimation.css">
+</head>
+<body class="theme-estimation">
+
+  <main class="page">
+    
+    <div class="game-container">
+      <header class="topbar">
+        <a class="back" href="../../index.html">← Головна</a>
+      </header>
+
+      <section class="hud">
+        <div class="hudTitle">
+          <h1>Estimation</h1>
+          <p>Окомір: де більше фігур?</p>
+        </div>
+        <div class="hudStats">
+          <div class="stat">
+            <span class="label">Життя</span>
+            <span class="value" id="lives">🧡🧡🧡</span>
+          </div>
+          <div class="stat">
+            <span class="label">Рівень</span>
+            <span class="value" id="level">1</span>
+          </div>
+          <div class="stat">
+            <span class="label">Рахунок</span>
+            <span class="value" id="score">0</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="gameCard">
+        <div id="startTrigger" class="start-trigger">
+          <button id="startBtn" class="bigBtn">Почати сесію</button>
+        </div>
+
+        <div id="gameContent" class="hidden" style="width: 100%;">
+          <div class="timer-container">
+            <div id="timerBar" class="timer-bar"></div>
+          </div>
+          
+          <div class="panelTitle" id="modeHint">Завантаження...</div>
+          
+          <div class="decks-container">
+            <div id="deckL" class="deck" onclick="choose('left')"></div>
+            <div id="deckR" class="deck" onclick="choose('right')"></div>
+          </div>
+        </div>
+
+        <div id="resultScreen" class="result-screen hidden">
+          <h2>Сесію завершено!</h2>
+          <div class="final-score" id="finalScore">0</div>
+          <p id="finalStats" style="color: #64748b; margin-bottom: 25px;"></p>
+          <button class="retry-btn" id="retryBtn">Спробувати ще раз</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Лідерборд -->
+    <aside class="leaderboard-card">
+      <div class="panelTitle">🏆 Таблиця лідерів</div>
+      <ol id="leaderboardList" class="leaderboard-list">
+        <li><span>Завантаження...</span></li>
+      </ol>
+    </aside>
+
+  </main>
+  
+  <script type="module" src="../../auth.js"></script>
+  <script src="estimation.js"></script>
+</body>
+</html>
