@@ -179,7 +179,7 @@ async function saveGameResult(finalScore, finalAccuracy, finalDuration) {
 
     const token = await user.getIdToken();
 
-    const response = await fetch("http://localhost:3000/api/results", {
+    const response = await fetch("https://braindice-api.onrender.com/api/results", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -207,7 +207,7 @@ async function saveGameResult(finalScore, finalAccuracy, finalDuration) {
 async function loadLeaderboard() {
   if (!leaderboardList) return;
   try {
-    const response = await fetch("http://localhost:3000/api/results/leaderboard/dual");
+    const response = await fetch("https://braindice-api.onrender.com/api/results/leaderboard/dual");
     const data = await response.json();
 
     if (data.status === "ok" && data.leaderboard.length > 0) {

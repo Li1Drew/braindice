@@ -141,7 +141,7 @@ window.handleAuth = async (type) => {
             }
 
             // Перевірка нікнейму (тепер вона сувора!)
-            const checkNick = await fetch(`http://localhost:3000/api/users/check-nickname?name=${nickname}`);
+            const checkNick = await fetch(`https://braindice-api.onrender.com/api/users/check-nickname?name=${nickname}`);
             if (checkNick.status === 409) {
                 throw new Error("nickname_taken");
             }
@@ -197,7 +197,7 @@ window.handleAuth = async (type) => {
 
         // Відправляємо дані на бекенд тільки після УСПІШНОГО входу
         if (type === 'login') {
-            await fetch("http://localhost:3000/api/users/profile", {
+            await fetch("https://braindice-api.onrender.com/api/users/profile", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

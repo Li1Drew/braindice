@@ -716,7 +716,7 @@ async function saveGameResult({
 
     const response =
       await fetch(
-        "http://localhost:3000/api/results",
+        "https://braindice-api.onrender.com/api/results",
         {
           method: "POST",
 
@@ -829,7 +829,7 @@ async function loadLeaderboard() {
 
     const response =
       await fetch(
-        "http://localhost:3000/api/results/leaderboard/memory"
+        "https://braindice-api.onrender.com/api/results/leaderboard/memory"
       );
 
 

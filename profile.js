@@ -122,7 +122,7 @@ async function loadProfile() {
 
 
     const response = await fetch(
-      "http://localhost:3000/api/users/me",
+      "https://braindice-api.onrender.com/api/users/me",
       {
         method: "GET",
         headers: {
@@ -214,7 +214,7 @@ async function loadStatistics() {
 
 
     const response = await fetch(
-      "http://localhost:3000/api/stats/me",
+      "https://braindice-api.onrender.com/api/stats/me",
       {
         method: "GET",
         headers: {
@@ -419,7 +419,7 @@ saveNameBtn.addEventListener(
 
       const response =
         await fetch(
-          "http://localhost:3000/api/users/profile",
+          "https://braindice-api.onrender.com/api/users/profile",
           {
             method: "POST",
 

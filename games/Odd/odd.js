@@ -157,7 +157,7 @@ async function endGame() {
 
     if (window.gameUserToken) {
         try {
-            await fetch("http://localhost:3000/api/results", {
+            await fetch("https://braindice-api.onrender.com/api/results", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -180,7 +180,7 @@ async function endGame() {
 
 async function loadLeaderboard() {
     try {
-        const response = await fetch("http://localhost:3000/api/results/leaderboard/odd");
+        const response = await fetch("https://braindice-api.onrender.com/api/results/leaderboard/odd");
         if (!response.ok) throw new Error("Помилка завантаження");
         
         const data = await response.json();

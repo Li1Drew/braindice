@@ -137,7 +137,7 @@ saveBtn.addEventListener('click', async () => {
         saveBtn.textContent = "Збереження...";
 
         const token = await window.myFirebaseAuth.currentUser.getIdToken();
-        const response = await fetch("http://localhost:3000/api/verbal/words", {
+        const response = await fetch("https://braindice-api.onrender.com/api/verbal/words", {
             method: "POST",
             headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
             body: JSON.stringify(payload)

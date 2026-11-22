@@ -207,7 +207,7 @@ async function endGame() {
     // Зберігаємо на бекенд
     if (window.gameUserToken) {
         try {
-            await fetch("http://localhost:3000/api/results", {
+            await fetch("https://braindice-api.onrender.com/api/results", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -231,7 +231,7 @@ async function endGame() {
 async function loadLeaderboard() {
     try {
         // ЗМІНЕНО: шлях змінено на /pattern замість ?game=pattern
-        const response = await fetch("http://localhost:3000/api/results/leaderboard/pattern");
+        const response = await fetch("https://braindice-api.onrender.com/api/results/leaderboard/pattern");
         if (!response.ok) throw new Error("Помилка завантаження");
         
         const data = await response.json();

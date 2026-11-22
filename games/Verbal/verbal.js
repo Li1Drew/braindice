@@ -31,7 +31,7 @@ let timerInterval;
 document.addEventListener('DOMContentLoaded', async () => {
     loadLeaderboard();
     try {
-        const response = await fetch('http://localhost:3000/api/verbal/tasks');
+        const response = await fetch('https://braindice-api.onrender.com/api/verbal/tasks');
         if (!response.ok) throw new Error("Сервер не відповів");
         
         const json = await response.json();
@@ -235,7 +235,7 @@ async function endGame() {
 
     if (window.gameUserToken) {
         try {
-            await fetch("http://localhost:3000/api/results", {
+            await fetch("https://braindice-api.onrender.com/api/results", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "Authorization": `Bearer ${window.gameUserToken}` },
                 body: JSON.stringify({ trainer: "verbal", score: score, accuracy: accuracy, averageTime: 0, difficulty: 1 })
@@ -247,7 +247,7 @@ async function endGame() {
 
 async function loadLeaderboard() {
     try {
-        const response = await fetch("http://localhost:3000/api/results/leaderboard/verbal");
+        const response = await fetch("https://braindice-api.onrender.com/api/results/leaderboard/verbal");
         if (!response.ok) throw new Error("Помилка завантаження");
         const data = await response.json();
         leaderboardList.innerHTML = '';
