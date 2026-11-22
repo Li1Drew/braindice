@@ -32,7 +32,7 @@ function checkAdminAccess(user) {
             <div class="lock-icon" style="color: #ef4444; font-size: 48px; margin-bottom: 15px;">🚫</div>
             <h2 style="color: #ef4444; margin:0 0 10px;">Доступ заборонено</h2>
             <p style="color: #64748b; margin:0 0 20px;">Ця сторінка доступна лише розробнику платформи.</p>
-            <a href="/index.html" style="background: white; padding: 10px 20px; border-radius: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #1e293b; text-decoration: none;">Повернутися на головну</a>
+            <a href="index.html" style="background: white; padding: 10px 20px; border-radius: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #1e293b; text-decoration: none;">Повернутися на головну</a>
         `;
     }
 }

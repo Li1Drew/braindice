@@ -524,7 +524,7 @@ logoutBtn.addEventListener(
     }
 
       window.location.href =
-        "/index.html";
+        "index.html";
 
     } catch (error) {
 
